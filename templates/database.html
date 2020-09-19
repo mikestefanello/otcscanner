@@ -1,0 +1,52 @@
+{{ define "content" }}
+<ul class="list-group mb-4 mt-3">
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Total orders
+    <span class="badge badge-success badge-pill">{{ .Content.All }}</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Completed orders
+    <span class="badge badge-success badge-pill">{{ .Content.Completed }}</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Incomplete orders
+    <span class="badge badge-success badge-pill">{{ .Content.Incomplete }}</span>
+  </li>
+</ul>
+<div class="card mb-3">
+  <div class="card-header">Download</div>
+  <div class="card-body">
+    <form method="POST" action="/database/download/all.csv" class="float-left mr-2"><button type="submit" class="btn btn-primary">All</button></form>
+    <form method="POST" action="/database/download/completed.csv" class="float-left mr-2"><button type="submit" class="btn btn-primary">Complete</button></form>
+    <form method="POST" action="/database/download/incomplete.csv" class="float-left mr-2"><button type="submit" class="btn btn-primary">Incomplete</button></form>
+  </div>
+</div>
+<div class="card mb-3">
+  <div class="card-header">Upload</div>
+  <div class="card-body">
+    <p class="card-text">Add additional records to the database.</p>
+    <form method="POST" action="/database/upload" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="upload">CSV file</label>
+        <input type="file" class="form-control-file" id="upload" name="upload">
+        <small id="upload-help" class="form-text text-muted">This must be a CSV file that follows the expected data format.</small>
+      </div>
+      <button type="submit" class="btn btn-info">Upload file</button>
+    </form>
+  </div>
+</div>
+<div class="card mb-3">
+  <div class="card-header">Delete</div>
+  <div class="card-body">
+    <div class="card-text">Delete all completed orders in the database. Be sure to download them before proceeding.</div>
+    <form method="POST" action="/database/delete/complete" class="mt-2"><button type="submit" class="btn btn-warning">Delete completed orders</button></form>
+  </div>
+</div>
+<div class="card mb-3">
+  <div class="card-header">Purge</div>
+  <div class="card-body">
+    <h4 class="card-title">This will delete all records in the database</h4>
+    <form method="POST" action="/database/delete/all"><button type="submit" class="btn btn-danger">Purge entire database</button></form>
+  </div>
+</div>
+{{ end }}

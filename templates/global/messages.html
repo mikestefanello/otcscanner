@@ -1,0 +1,7 @@
+{{ define "messages" }}
+  {{ if .Messages}}
+    {{ range .Messages }}
+      <div class="alert alert-{{ .Status }}">{{ .Text }}</div>
+    {{ end }}
+  {{ end }}
+{{ end }}

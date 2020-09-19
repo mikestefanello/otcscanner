@@ -1,0 +1,53 @@
+{{ define "content" }}
+<form id="scan" method="POST">
+  <fieldset>
+    <div class="form-group">
+      <label for="barcode">Barcode</label>
+      <input type="text" class="form-control" id="barcode" name="barcode">
+    </div>
+    <div class="form-group">
+      <label for="country">Country</label>
+      <input type="text" class="form-control" id="country" name="country" value="{{ if .Content.Country }}{{ .Content.Country }}{{ end }}">
+    </div>
+    <div class="form-group">
+      <label for="barcode">Weight</label>
+      <input type="text" class="form-control" id="weight" name="weight" value="{{ if .Content.Weight }}{{ .Content.Weight }}{{ end }}">
+    </div>
+    <div class="form-group">
+      <label for="length">Length</label>
+      <input type="text" class="form-control" id="length" name="length" value="{{ if .Content.Length }}{{ .Content.Length }}{{ end }}">
+    </div>
+    <div class="form-group">
+      <label for="width">Width</label>
+      <input type="text" class="form-control" id="width" name="width" value="{{ if .Content.Width }}{{ .Content.Width }}{{ end }}">
+    </div>
+    <div class="form-group">
+      <label for="height">Height</label>
+      <input type="text" class="form-control" id="height" name="height" value="{{ if .Content.Height }}{{ .Content.Height }}{{ end }}">
+    </div>
+    <fieldset class="form-group">
+      <legend>Service</legend>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="service" id="serviceIpa" value="IPA"{{ if eq .Content.Service "IPA" }} checked{{ end }}>
+          IPA
+        </label>
+      </div>
+      <div class="form-check">
+      <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="service" id="serviceOrange" value="Orange"{{ if eq .Content.Service "Orange" }} checked{{ end }}>
+          Orange
+        </label>
+      </div>
+      <div class="form-check disabled">
+      <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="service" id="serviceRrd" value="RRD"{{ if eq .Content.Service "RRD" }} checked{{ end }}>
+          RRD
+        </label>
+      </div>
+    </fieldset>
+   
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </fieldset>
+</form>
+{{ end }}
