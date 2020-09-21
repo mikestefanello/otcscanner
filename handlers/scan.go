@@ -138,7 +138,7 @@ func (h *HTTPHandler) processScan(r *http.Request) (models.Scan, error) {
 	// Save the order
 	err = h.repo.UpdateOne(order)
 	if err != nil {
-		log.Error().Err(err).Msg("Unable to update order in database.")
+		log.Error().Err(err).Msg("Unable to update order in database from scan.")
 		return s, errors.New("Unable to save order in the database")
 	}
 

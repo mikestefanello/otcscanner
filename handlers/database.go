@@ -75,6 +75,7 @@ func (h *HTTPHandler) DatabaseUpload(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		page.AddMessage("danger", err.Error())
 	} else {
+		log.Info().Int("count", added).Msg("Uploaded orders to the database.")
 		page.AddMessage("success", fmt.Sprintf("Added %d orders to the database.", added))
 	}
 
@@ -93,6 +94,7 @@ func (h *HTTPHandler) DatabaseDeleteAll(w http.ResponseWriter, r *http.Request) 
 		log.Error().Err(err).Msg("Unable to delete entire database.")
 		page.AddMessage("danger", "Unable to delete entire database.")
 	} else {
+		log.Info().Msg("Deleted all orders from the database.")
 		page.AddMessage("success", "Database deleted.")
 	}
 
@@ -111,6 +113,7 @@ func (h *HTTPHandler) DatabaseDeleteCompleted(w http.ResponseWriter, r *http.Req
 		log.Error().Err(err).Msg("Unable to delete completed orders from database.")
 		page.AddMessage("danger", "Unable to delete completed orders.")
 	} else {
+		log.Info().Msg("Deleted completed orders from the database.")
 		page.AddMessage("success", "Completed orders have been deleted.")
 	}
 
