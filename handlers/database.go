@@ -185,7 +185,9 @@ func (h *HTTPHandler) serveOrdersCsv(w http.ResponseWriter, r *http.Request, loa
 		return errors.New("Unable to process orders for export")
 	}
 
-	http.ServeContent(w, r, "db.csv", time.Now(), bytes.NewReader([]byte(csv)))
+	w.Header().Set("Content-Disposition", "attachment; filename=export.csv")
+	w.Header().Set("Content-Type", "text/csv")
+	http.ServeContent(w, r, "export.csv", time.Now(), bytes.NewReader([]byte(csv)))
 	return nil
 }
 
