@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"strings"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/mikestefanello/otcscanner/config"
@@ -23,8 +22,8 @@ type Page struct {
 func (p *Page) AddMessage(status, text string) {
 	p.Messages = append(p.Messages, Message{
 		Status: status,
-		Text: text,
-	)
+		Text:   text,
+	})
 }
 
 // Message describes a status message which can be added to pages
