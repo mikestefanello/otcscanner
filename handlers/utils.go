@@ -23,7 +23,7 @@ type Page struct {
 func (p *Page) AddMessage(status, text string) {
 	p.Messages = append(p.Messages, Message{
 		Status: status,
-		Text:   strings.Replace(text, "\n", "<br/>", -1)},
+		Text: text,
 	)
 }
 

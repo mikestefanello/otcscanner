@@ -4,8 +4,10 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/mikestefanello/otcscanner/models"
 	"github.com/mikestefanello/otcscanner/repository"
 	"github.com/rs/zerolog/log"
@@ -24,7 +26,14 @@ func (h *HTTPHandler) ScanForm(w http.ResponseWriter, r *http.Request) {
 		// Process the scan
 		scan, err := h.processScan(r)
 		if err != nil {
-			page.AddMessage("danger", err.Error())
+			if _, ok := err.(validator.ValidationErrors); ok {
+				for _, valErr := range err.(validator.ValidationErrors) {
+					page.AddMessage("danger", fmt.Sprintf("%s failed validation: %s", valErr.Field(), valErr.Tag()))
+				}
+			} else {
+				page.AddMessage("danger", err.Error())
+			}
+
 		} else {
 			page.AddMessage("success", "Scan processed successfully.")
 		}
