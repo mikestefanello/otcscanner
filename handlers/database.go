@@ -127,7 +127,7 @@ func (h *HTTPHandler) DatabaseDownloadAll(w http.ResponseWriter, r *http.Request
 	}
 
 	// Load all orders
-	err := h.serveOrdersCsv(w, r, h.repo.LoadAll)
+	err := h.serveOrdersCsv(w, r, "all.csv", h.repo.LoadAll)
 
 	if err != nil {
 		page.AddMessage("danger", err.Error())
@@ -143,7 +143,7 @@ func (h *HTTPHandler) DatabaseDownloadCompleted(w http.ResponseWriter, r *http.R
 	}
 
 	// Load all orders
-	err := h.serveOrdersCsv(w, r, h.repo.LoadCompleted)
+	err := h.serveOrdersCsv(w, r, "completed.csv", h.repo.LoadCompleted)
 
 	if err != nil {
 		page.AddMessage("danger", err.Error())
@@ -159,7 +159,7 @@ func (h *HTTPHandler) DatabaseDownloadIncomplete(w http.ResponseWriter, r *http.
 	}
 
 	// Load all orders
-	err := h.serveOrdersCsv(w, r, h.repo.LoadIncomplete)
+	err := h.serveOrdersCsv(w, r, "incomplete.csv", h.repo.LoadIncomplete)
 
 	if err != nil {
 		page.AddMessage("danger", err.Error())
@@ -169,7 +169,7 @@ func (h *HTTPHandler) DatabaseDownloadIncomplete(w http.ResponseWriter, r *http.
 }
 
 // serveOrdersCsv gets data from a loader function and serves a CSV file with the data returned
-func (h *HTTPHandler) serveOrdersCsv(w http.ResponseWriter, r *http.Request, loader func() (*models.Orders, error)) error {
+func (h *HTTPHandler) serveOrdersCsv(w http.ResponseWriter, r *http.Request, filename string, loader func() (*models.Orders, error)) error {
 	// Load all orders
 	orders, err := loader()
 
@@ -185,9 +185,9 @@ func (h *HTTPHandler) serveOrdersCsv(w http.ResponseWriter, r *http.Request, loa
 		return errors.New("Unable to process orders for export")
 	}
 
-	w.Header().Set("Content-Disposition", "attachment; filename=export.csv")
+	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", filename))
 	w.Header().Set("Content-Type", "text/csv")
-	http.ServeContent(w, r, "export.csv", time.Now(), bytes.NewReader([]byte(csv)))
+	http.ServeContent(w, r, filename, time.Now(), bytes.NewReader([]byte(csv)))
 	return nil
 }
 

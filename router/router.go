@@ -25,9 +25,9 @@ func NewRouter(cfg config.Config, h *handlers.HTTPHandler) *chi.Mux {
 	r.Post("/database/upload", h.DatabaseUpload)
 	r.Post("/database/delete/all", h.DatabaseDeleteAll)
 	r.Post("/database/delete/complete", h.DatabaseDeleteCompleted)
-	r.Post("/database/download/all.csv", h.DatabaseDownloadAll)
-	r.Post("/database/download/completed.csv", h.DatabaseDownloadCompleted)
-	r.Post("/database/download/incomplete.csv", h.DatabaseDownloadIncomplete)
+	r.Post("/database/download/all", h.DatabaseDownloadAll)
+	r.Post("/database/download/completed", h.DatabaseDownloadCompleted)
+	r.Post("/database/download/incomplete", h.DatabaseDownloadIncomplete)
 
 	return r
 }
