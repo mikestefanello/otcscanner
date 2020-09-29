@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/mikestefanello/otcscanner/models"
@@ -100,7 +101,7 @@ func (h *HTTPHandler) getPreviousScanFromCookie(r *http.Request) (models.Scan, e
 func (h *HTTPHandler) processScan(r *http.Request) (models.Scan, error) {
 	// Build a scan model from the form values
 	var s = models.Scan{
-		Barcode: r.FormValue("barcode"),
+		Barcode: strings.ToUpper(r.FormValue("barcode")),
 		Country: r.FormValue("country"),
 		Weight:  r.FormValue("weight"),
 		Length:  r.FormValue("length"),
