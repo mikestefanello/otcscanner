@@ -9,4 +9,5 @@ type Scan struct {
 	Width   string `json:"width" validate:"required,numeric,gt=0"`
 	Height  string `json:"height" validate:"required,numeric,gt=0"`
 	Service string `json:"service" validate:"required"`
+	Account string `json:"account" validate:"required"`
 }

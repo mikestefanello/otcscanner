@@ -46,6 +46,21 @@
         </label>
       </div>
     </fieldset>
+    <fieldset class="form-group">
+      <legend>Account</legend>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="account" id="accountOTC" value="OTC"{{ if eq .Content.Account "OTC" }} checked{{ end }}>
+          OTC
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="account" id="accountWAB" value="WAB"{{ if eq .Content.Account "WAB" }} checked{{ end }}>
+          WAB
+        </label>
+      </div>
+    </fieldset>
    
     <button type="submit" class="btn btn-primary">Submit</button>
   </fieldset>

@@ -108,6 +108,7 @@ func (h *HTTPHandler) processScan(r *http.Request) (models.Scan, error) {
 		Width:   r.FormValue("width"),
 		Height:  r.FormValue("height"),
 		Service: r.FormValue("service"),
+		Account: r.FormValue("account"),
 	}
 
 	// Validate the input
@@ -134,6 +135,7 @@ func (h *HTTPHandler) processScan(r *http.Request) (models.Scan, error) {
 	order.Width = s.Width
 	order.Height = s.Height
 	order.Service = s.Service
+	order.Account = s.Account
 	order.CalculateDim()
 
 	// Save the order
