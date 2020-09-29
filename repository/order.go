@@ -32,6 +32,9 @@ type OrderRepository interface {
 	// UpdateOne updates a given order
 	UpdateOne(order *models.Order) error
 
+	// InsertOne insert a new order
+	InsertOne(order *models.Order) error
+
 	// InsertMany inserts multiple new orders
 	InsertMany(orders *models.Orders) error
 

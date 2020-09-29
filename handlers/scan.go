@@ -111,6 +111,11 @@ func (h *HTTPHandler) processScan(r *http.Request) (models.Scan, error) {
 		Account: r.FormValue("account"),
 	}
 
+	// Check if create new was selected
+	if r.FormValue("create_new") == "on" {
+		s.CreateNew = true
+	}
+
 	// Validate the input
 	err := h.validator.Struct(s)
 	if err != nil {
@@ -118,10 +123,17 @@ func (h *HTTPHandler) processScan(r *http.Request) (models.Scan, error) {
 	}
 
 	// Load an order with the given barcode
+	exists := true
 	order, err := h.repo.LoadByID(s.Barcode)
 	if err != nil {
 		if err == repository.ErrNotFound {
-			return s, errors.New("Unable to match barcode to order")
+			if !s.CreateNew {
+				return s, errors.New("Unable to match barcode to order")
+			} else {
+				// Initialize a new order
+				order = &models.Order{}
+				exists = false
+			}
 		} else {
 			log.Error().Err(err).Msg("Unable to load order from database.")
 			return s, errors.New("Unable to communicate with database")
@@ -129,6 +141,7 @@ func (h *HTTPHandler) processScan(r *http.Request) (models.Scan, error) {
 	}
 
 	// Update the order with the scan
+	order.PackageID = s.Barcode
 	order.Country = s.Country
 	order.Weight = s.Weight
 	order.Length = s.Length
@@ -139,7 +152,12 @@ func (h *HTTPHandler) processScan(r *http.Request) (models.Scan, error) {
 	order.CalculateDim()
 
 	// Save the order
-	err = h.repo.UpdateOne(order)
+	if exists {
+		err = h.repo.UpdateOne(order)
+	} else {
+		err = h.repo.InsertOne(order)
+	}
+
 	if err != nil {
 		log.Error().Err(err).Msg("Unable to update order in database from scan.")
 		return s, errors.New("Unable to save order in the database")

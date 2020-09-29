@@ -104,6 +104,15 @@ func (r *mongoOrderRepository) UpdateOne(order *models.Order) error {
 	return err
 }
 
+func (r *mongoOrderRepository) InsertOne(order *models.Order) error {
+	ctx, cancel := r.contextWithTimeout()
+	defer cancel()
+
+	_, err := r.getCollection().InsertOne(ctx, order)
+
+	return err
+}
+
 func (r *mongoOrderRepository) InsertMany(orders *models.Orders) error {
 	ctx, cancel := r.contextWithTimeout()
 	defer cancel()

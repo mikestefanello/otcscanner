@@ -61,6 +61,14 @@
         </label>
       </div>
     </fieldset>
+    <fieldset class="form-group">
+      <div class="form-check">
+        <label class="form-check-label">
+          <input class="form-check-input" name="create_new" type="checkbox"{{ if .Content.CreateNew}} checked{{ end }}>
+          Create a new order if this barcode does not exist
+        </label>
+      </div>
+    </fieldset>
    
     <button type="submit" class="btn btn-primary">Submit</button>
   </fieldset>
