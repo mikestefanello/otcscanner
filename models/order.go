@@ -53,6 +53,7 @@ type Order struct {
 	Height                                 string `bson:"height" csv:"Height"`
 	DIM                                    string `bson:"dim" csv:"DIM"`
 	Account                                string `bson:"account" csv:"Account"`
+	Date                                   string `bson:"date" csv:"Date"`
 }
 
 // Orders is a slice of order structs

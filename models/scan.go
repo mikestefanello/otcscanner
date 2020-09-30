@@ -8,6 +8,7 @@ type Scan struct {
 	Length    string `json:"length" validate:"required,numeric,gt=0"`
 	Width     string `json:"width" validate:"required,numeric,gt=0"`
 	Height    string `json:"height" validate:"required,numeric,gt=0"`
+	Date      string `json:"date" validate:"required"`
 	Service   string `json:"service" validate:"required"`
 	Account   string `json:"account" validate:"required"`
 	CreateNew bool   `json:"createNew"`

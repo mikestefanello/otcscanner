@@ -107,6 +107,7 @@ func (h *HTTPHandler) processScan(r *http.Request) (models.Scan, error) {
 		Length:  r.FormValue("length"),
 		Width:   r.FormValue("width"),
 		Height:  r.FormValue("height"),
+		Date:    r.FormValue("date"),
 		Service: r.FormValue("service"),
 		Account: r.FormValue("account"),
 	}
@@ -129,11 +130,10 @@ func (h *HTTPHandler) processScan(r *http.Request) (models.Scan, error) {
 		if err == repository.ErrNotFound {
 			if !s.CreateNew {
 				return s, errors.New("Unable to match barcode to order")
-			} else {
-				// Initialize a new order
-				order = &models.Order{}
-				exists = false
 			}
+			// Initialize a new order
+			order = &models.Order{}
+			exists = false
 		} else {
 			log.Error().Err(err).Msg("Unable to load order from database.")
 			return s, errors.New("Unable to communicate with database")
@@ -147,6 +147,7 @@ func (h *HTTPHandler) processScan(r *http.Request) (models.Scan, error) {
 	order.Length = s.Length
 	order.Width = s.Width
 	order.Height = s.Height
+	order.Date = s.Date
 	order.Service = s.Service
 	order.Account = s.Account
 	order.CalculateDim()
