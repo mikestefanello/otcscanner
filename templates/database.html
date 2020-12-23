@@ -35,18 +35,37 @@
     </form>
   </div>
 </div>
-<div class="card mb-3">
-  <div class="card-header">Delete</div>
-  <div class="card-body">
-    <div class="card-text">Delete all completed orders in the database. Be sure to download them before proceeding.</div>
-    <form method="POST" action="/database/delete/complete" class="mt-2"><button type="submit" class="btn btn-warning">Delete completed orders</button></form>
+
+<div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" style="cursor:pointer" id="headingOne" class="collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        Delete operations
+    </div>
+
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+
+        <p><h4>All delete operations are <strong>permanent</strong>. Proceed with caution.</h4></p>
+
+        <div class="card mb-3">
+          <div class="card-header bg-warning text-white"><strong>Delete</strong></div>
+          <div class="card-body">
+            <div class="card-text">Delete all completed orders in the database. Be sure to download them before proceeding.</div>
+            <form method="POST" action="/database/delete/complete" class="mt-2"><button type="submit" class="btn btn-warning">Delete completed orders</button></form>
+          </div>
+        </div>
+        <div class="card mb-3">
+          <div class="card-header bg-danger text-white"><strong>Purge</strong></div>
+          <div class="card-body">
+            <h4 class="card-title">This will delete all records in the database</h4>
+            <form method="POST" action="/database/delete/all"><button type="submit" class="btn btn-danger">Purge entire database</button></form>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
 </div>
-<div class="card mb-3">
-  <div class="card-header">Purge</div>
-  <div class="card-body">
-    <h4 class="card-title">This will delete all records in the database</h4>
-    <form method="POST" action="/database/delete/all"><button type="submit" class="btn btn-danger">Purge entire database</button></form>
-  </div>
-</div>
+
+
 {{ end }}
